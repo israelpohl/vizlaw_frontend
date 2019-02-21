@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.13.5",
+    "oldp-api": "^0.1.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-graph-vis": "^1.0.2",
