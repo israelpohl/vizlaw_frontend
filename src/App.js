@@ -87,16 +87,16 @@ class App extends Component {
         // node.heightConstraint = { minimum: node.numberCitations * 1.5 };
         switch (node.court) {
           case "Bundesgericht":
-            node.color = "#d04147";
+            node.color = "#cc5c61";
             break;
           case "Landesgericht":
-            node.color = "#cc666b";
+            node.color = "#cb7275";
             break;
           case "Oberlandesgericht":
-            node.color = "#cc666b";
+            node.color = "#cb7275";
             break;
           default:
-            node.color = "#feb6b9";
+            node.color = "#c79294";
             break;
         }
 
@@ -145,6 +145,7 @@ class App extends Component {
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
             />
+            <span style={{ fontSize: "300%" }}>{this.state.searchTerm}</span>
             <Input.Search
               style={{ width: "100%" }}
               size="large"
@@ -184,13 +185,6 @@ class App extends Component {
           </Col>
           <Col span={10}>
             {this.state.favorites.length > 0 && <h2>Gespeicherte Urteile</h2>}
-            {this.state.favorites.length > 0 && (
-              <div>
-                <Button type="primary" onClick={this.saveAsPDF.bind(this)}>
-                  Als PDF speichern
-                </Button>
-              </div>
-            )}
 
             {this.state.favorites.map(favorite => (
               <span>
@@ -224,6 +218,17 @@ class App extends Component {
                 </Tag>
               </span>
             ))}
+            {this.state.favorites.length > 0 && (
+              <div>
+                <a
+                  type="primary"
+                  style={{ color: "#f3464d" }}
+                  onClick={this.saveAsPDF.bind(this)}
+                >
+                  <Icon type="export" /> Export as PDF <Icon type="file" />
+                </a>
+              </div>
+            )}
             {this.state.selectedId &&
               (this.state.graph.nodes.length > 0 ? (
                 <Graph

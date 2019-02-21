@@ -16,7 +16,12 @@ app.post("/pdf", (req, res) => {
   pdf
     .create(
       req.body.favorites
-        .map(favorite => `<h1>${favorite.slug}</h1>${favorite.content}`)
+        .map(
+          favorite =>
+            `<img width=500px src="https://i.imgur.com/uWmKFYV.png"/><h1>${
+              favorite.slug
+            }</h1>${favorite.content}`
+        )
         .join("<br/>"),
       options
     )
