@@ -3,7 +3,7 @@ import Graph from "react-graph-vis";
 import refs from "./refs";
 import sample from "./data";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag } from "antd";
+import { Input, Icon, Row, Col, List, Tag, Button } from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -18,6 +18,20 @@ class App extends Component {
   // async componentDidMount() {
   //   await this.load(this.state.rootNodeId);
   // }
+
+  async saveAsPDF() {
+    console.log("FAVORITES", this.state.favorites);
+    const form = new FormData();
+    form.append("favorites", JSON.stringify(this.state.favorites));
+    await fetch("/pdf", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ favorites: this.state.favorites })
+    });
+  }
 
   async load(id) {
     const result = await fetch(
@@ -46,7 +60,7 @@ class App extends Component {
 
   async search(searchTerm) {
     const url =
-      `https://cors.io/?http://de.openlegaldata.io/api/cases/search/?format=json&page_size=90&text=` +
+      `https://de.openlegaldata.io/api/cases/search/?format=json&page_size=90&text=` +
       searchTerm.replace(" ", "+");
     const result = await fetch(url, {
       mode: "cors",
@@ -170,6 +184,14 @@ class App extends Component {
           </Col>
           <Col span={10}>
             {this.state.favorites.length > 0 && <h2>Gespeicherte Urteile</h2>}
+            {this.state.favorites.length > 0 && (
+              <div>
+                <Button type="primary" onClick={this.saveAsPDF.bind(this)}>
+                  Als PDF speichern
+                </Button>
+              </div>
+            )}
+
             {this.state.favorites.map(favorite => (
               <span>
                 <Tag
@@ -178,7 +200,7 @@ class App extends Component {
                   color="#f3464d"
                   onClick={async () => {
                     const fetchResult = await fetch(
-                      `https://cors.io/?https://de.openlegaldata.io/api/cases/${
+                      `https://de.openlegaldata.io/api/cases/${
                         favorite.id
                       }/?format=json`,
                       {
@@ -214,7 +236,7 @@ class App extends Component {
                       console.log("selectedNodeId", selectedNodeId);
 
                       const fetchResult = await fetch(
-                        `https://cors.io/?https://de.openlegaldata.io/api/cases/${selectedNodeId}/?format=json`,
+                        `https://de.openlegaldata.io/api/cases/${selectedNodeId}/?format=json`,
                         {
                           mode: "cors",
                           headers: {
@@ -241,7 +263,7 @@ class App extends Component {
                 </span>
               ))}
           </Col>
-          <Col span={8}>
+          <Col span={8} style={{ maxHeight: "100vh", overflow: "scroll" }}>
             {this.state.selectedDetail && (
               <div>
                 <h2>
