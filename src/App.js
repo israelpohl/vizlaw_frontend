@@ -141,7 +141,6 @@ class App extends Component {
               }}
               onSearch={value => this.search(value)}
             />
-            {this.state.selectedId}
             {this.state.searchResults && (
               <List
                 dataSource={this.state.searchResults}
@@ -255,6 +254,7 @@ class App extends Component {
                         ]
                       });
                     }}
+                    style={{ color: "#f3464d" }}
                     type="star"
                   />{" "}
                   {this.state.selectedDetail.name}
