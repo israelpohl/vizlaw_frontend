@@ -3,7 +3,7 @@ import Graph from "react-graph-vis";
 import refs from "./refs";
 import sample from "./data";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag } from "antd";
+import { Input, Icon, Row, Col, List, Tag, Button } from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -18,6 +18,20 @@ class App extends Component {
   // async componentDidMount() {
   //   await this.load(this.state.rootNodeId);
   // }
+
+  async saveAsPDF() {
+    console.log("FAVORITES", this.state.favorites);
+    const form = new FormData();
+    form.append("favorites", JSON.stringify(this.state.favorites));
+    await fetch("/pdf", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ favorites: this.state.favorites })
+    });
+  }
 
   async load(id) {
     const result = await fetch(
@@ -46,7 +60,7 @@ class App extends Component {
 
   async search(searchTerm) {
     const url =
-      `http://de.openlegaldata.io/api/cases/search/?format=json&page_size=90&text=` +
+      `https://de.openlegaldata.io/api/cases/search/?format=json&page_size=90&text=` +
       searchTerm.replace(" ", "+");
     const result = await fetch(url, {
       mode: "cors",
@@ -73,16 +87,16 @@ class App extends Component {
         // node.heightConstraint = { minimum: node.numberCitations * 1.5 };
         switch (node.court) {
           case "Bundesgericht":
-            node.color = "#d04147";
+            node.color = "#cc5c61";
             break;
           case "Landesgericht":
-            node.color = "#cc666b";
+            node.color = "#cb7275";
             break;
           case "Oberlandesgericht":
-            node.color = "#cc666b";
+            node.color = "#cb7275";
             break;
           default:
-            node.color = "#feb6b9";
+            node.color = "#c79294";
             break;
         }
 
@@ -131,6 +145,7 @@ class App extends Component {
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
             />
+            <span style={{ fontSize: "300%" }}>{this.state.searchTerm}</span>
             <Input.Search
               style={{ width: "100%" }}
               size="large"
@@ -170,6 +185,7 @@ class App extends Component {
           </Col>
           <Col span={10}>
             {this.state.favorites.length > 0 && <h2>Gespeicherte Urteile</h2>}
+
             {this.state.favorites.map(favorite => (
               <span>
                 <Tag
@@ -202,6 +218,17 @@ class App extends Component {
                 </Tag>
               </span>
             ))}
+            {this.state.favorites.length > 0 && (
+              <div>
+                <a
+                  type="primary"
+                  style={{ color: "#f3464d" }}
+                  onClick={this.saveAsPDF.bind(this)}
+                >
+                  <Icon type="export" /> Export as PDF <Icon type="file" />
+                </a>
+              </div>
+            )}
             {this.state.selectedId &&
               (this.state.graph.nodes.length > 0 ? (
                 <Graph
@@ -241,7 +268,7 @@ class App extends Component {
                 </span>
               ))}
           </Col>
-          <Col span={8}>
+          <Col span={8} style={{ maxHeight: "100vh", overflow: "scroll" }}>
             {this.state.selectedDetail && (
               <div>
                 <h2>

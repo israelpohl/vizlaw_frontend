@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "antd": "^3.13.5",
+    "body-parser": "^1.18.3",
+    "html-pdf": "^2.2.0",
+    "html5-to-pdf": "^3.1.3",
     "oldp-api": "^0.1.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
@@ -14,11 +17,13 @@
     "recharts": "^1.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node src/server.js",
+    "build": "react-scripts build && mv build src/build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "npm run-script build"
   },
+  "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": "react-app"
   },
