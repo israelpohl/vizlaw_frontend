@@ -84,6 +84,7 @@ class App extends Component {
         node.id = node.nodeId;
         node.label = node.name;
         node.shape = 'dot';
+        node.value = node.numberCitations
         // node.widthConstraint = { minimum: node.numberCitations * 1.5 };
         // node.heightConstraint = { minimum: node.numberCitations * 1.5 };
         switch (node.court) {
