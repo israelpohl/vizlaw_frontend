@@ -63,12 +63,12 @@ class App extends Component {
       `https://vizlaw-api.azurewebsites.net/api/search?searchQuery=` +
       searchTerm.replace(" ", "+");
     const result = await fetch(url, {
-      mode: "cors",
-      headers: {
-        Authorization: "Token " + "f268accea9dda3efb1837afe34b3a663ecb8af98",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "application/json"
-      }
+//      mode: "cors",
+//      headers: {
+//        Authorization: "Token " + "f268accea9dda3efb1837afe34b3a663ecb8af98",
+//        "Access-Control-Allow-Origin": "*",
+//        "Access-Control-Allow-Headers": "application/json"
+//      }
     });
     const json = await result.json();
     console.log("searchResults", json);
