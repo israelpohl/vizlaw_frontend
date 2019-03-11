@@ -72,7 +72,7 @@ class App extends Component {
     });
     const json = await result.json();
     console.log("searchResults", json);
-    this.setState({ searchResults: json.results });
+    this.setState({ searchResults: json });
   }
 
   render() {
