@@ -60,7 +60,7 @@ class App extends Component {
 
   async search(searchTerm) {
     const url =
-      `https://de.openlegaldata.io/api/cases/search/?format=json&page_size=90&text=` +
+      `https://vizlaw-api.azurewebsites.net/api/search?searchQuery=` +
       searchTerm.replace(" ", "+");
     const result = await fetch(url, {
       mode: "cors",
@@ -196,9 +196,9 @@ class App extends Component {
                   color="#f3464d"
                   onClick={async () => {
                     const fetchResult = await fetch(
-                      `https://de.openlegaldata.io/api/cases/${
+                      `https://vizlaw-api.azurewebsites.net/api/search?DecisionId=${
                         favorite.id
-                      }/?format=json`,
+                      }`,
                       {
                         mode: "cors",
                         headers: {
@@ -243,7 +243,7 @@ class App extends Component {
                       console.log("selectedNodeId", selectedNodeId);
 
                       const fetchResult = await fetch(
-                        `https://de.openlegaldata.io/api/cases/${selectedNodeId}/?format=json`,
+                        `https://vizlaw-api.azurewebsites.net/api/search?DecisionId=${selectedNodeId}`,
                         {
                           mode: "cors",
                           headers: {
