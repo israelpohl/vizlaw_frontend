@@ -6,37 +6,6 @@ import moment from "moment";
 import { Input, Icon, Row, Col, List, Tag, Button } from "antd";
 import "antd/dist/antd.css";
 
-function OpenWindowWithPost(url, windowoption, name, params)
-  {
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", url);
-    form.setAttribute("target", name);
-
-    for (var i in params) {
-        if (params.hasOwnProperty(i)) {
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = i;
-            input.value = params[i];
-            form.appendChild(input);
-        }
-    }
-    
-    document.body.appendChild(form);
-    
-    //note I am using a post.htm page since I did not want to make double request to the page 
-   //it might have some Page_Load call which might screw things up.
-    window.open("post.htm", name, windowoption);
-    
-    form.submit();
-    
-    document.body.removeChild(form);
-}
-
-
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -57,18 +26,16 @@ class App extends Component {
     const form = new FormData();
     form.append("favorites", JSON.stringify(this.state.favorites));
 
-    var param = { 'favorites' : JSON.stringify(this.state.favorites)};		    		
-    OpenWindowWithPost("/pdf", 
-    "width=730,height=345,left=100,top=100,resizable=yes,scrollbars=yes", 
-    "NewFile", param);		
-    // await fetch("/pdf", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({ favorites: this.state.favorites }),
-    // });
+     await fetch("/pdf", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ favorites: this.state.favorites }),
+      success: (response) => {window.open(response)}
+    });
+
   }
   
   async load(id) {
