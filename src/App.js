@@ -33,8 +33,7 @@ class App extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ favorites: this.state.favorites }),
-      success: (response) => {window.open(response)}
-    });
+     });
 
   }
   
@@ -293,6 +292,19 @@ class App extends Component {
                     }}
                     style={{ color: "#f3464d" }}
                     type="star"
+                  />{" "}
+                  <Icon
+                    onClick={() => {
+                      const oldItems = this.state.favorites
+                      const valueToRemove = this.state.selectedDetail
+                      const filteredItems = oldItems.filter(item => item !== valueToRemove)
+                      console.log('oncklick', this.state.favorites, this.state.selectedDetail, valueToRemove, filteredItems)
+                      this.setState({
+                        favorites: filteredItems
+                      });
+                    }}
+                    style={{ color: "#f3464d" }}
+                    type="delete"
                   />{" "}
                   {this.state.selectedDetail.name}
                 </h2>
