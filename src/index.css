@@ -12,3 +12,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.ant-list-item {
+  padding-left:12px;
+}
+
+.ant-list-item:hover {
+  background: #c79294;
+  cursor: pointer;
+}
