@@ -286,6 +286,19 @@ class App extends Component {
                     style={{ color: "#f3464d" }}
                     type="star"
                   />{" "}
+                  <Icon
+                    onClick={() => {
+                      const oldItems = this.state.favorites
+                      const valueToRemove = this.state.selectedDetail
+                      const filteredItems = oldItems.filter(item => item !== valueToRemove)
+                      console.log('oncklick', this.state.favorites, this.state.selectedDetail, valueToRemove, filteredItems)
+                      this.setState({
+                        favorites: filteredItems
+                      });
+                    }}
+                    style={{ color: "#f3464d" }}
+                    type="delete"
+                  />{" "}
                   {this.state.selectedDetail.name}
                 </h2>
                 <h1 style={{ color: "#f3464d" }}>
