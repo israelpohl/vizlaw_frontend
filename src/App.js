@@ -320,7 +320,7 @@ class App extends Component {
             )}
           </Col>
         </Row>
-        <a href="https://vizlaw.de">Impressum</a>
+        <a href="https://vizlaw.de/#section_contact">Impressum</a>
       </div>
     );
   }
