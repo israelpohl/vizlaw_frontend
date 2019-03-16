@@ -93,7 +93,7 @@ class App extends Component {
         // node.heightConstraint = { minimum: node.numberCitations * 1.5 };
         switch (node.court) {
           case "Bundesgericht":
-            node.color = "#cc5c61";
+            node.color = "#d21534";
             break;
           case "Landesgericht":
             node.color = "#cb7275";
@@ -197,7 +197,7 @@ class App extends Component {
                 <Tag
                   size="large"
                   style={{ fontSize: "200%" }}
-                  color="#f3464d"
+                  color="#d21534"
                   onClick={async () => {
                     const fetchResult = await fetch(
                       `https://vizlaw-api.azurewebsites.net/api/search?DecisionId=${
@@ -228,7 +228,7 @@ class App extends Component {
               <div>
                 <a
                   type="primary"
-                  style={{ color: "#f3464d" }}
+                  style={{ color: "#d21534" }}
                   onClick={this.saveAsPDF.bind(this)}
                 >
                   <Icon type="export" /> Export as PDF <Icon type="file" />
@@ -290,7 +290,7 @@ class App extends Component {
                         ]
                       });
                     }}
-                    style={{ color: "#f3464d" }}
+                    style={{ color: "#d21534" }}
                     type="star"
                   />{" "}
                   <Icon
@@ -303,12 +303,12 @@ class App extends Component {
                         favorites: filteredItems
                       });
                     }}
-                    style={{ color: "#f3464d" }}
+                    style={{ color: "#d21534" }}
                     type="delete"
                   />{" "}
                   {this.state.selectedDetail.name}
                 </h2>
-                <h1 style={{ color: "#f3464d" }}>
+                <h1 style={{ color: "#d21534" }}>
                   {this.state.selectedDetail.file_number}
                 </h1>
                 <div
