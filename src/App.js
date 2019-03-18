@@ -19,24 +19,29 @@ class App extends Component {
   //   await this.load(this.state.rootNodeId);
   // }
 
-
-  
   async saveAsPDF() {
+    this.setState({ savingAsPdf: true });
     console.log("FAVORITES", this.state.favorites);
     const form = new FormData();
     form.append("favorites", JSON.stringify(this.state.favorites));
 
-     await fetch("/pdf", {
+    const result = await fetch("/pdf", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ favorites: this.state.favorites }),
-     });
+      body: JSON.stringify({ favorites: this.state.favorites })
+    });
 
+    console.log("RESULT", result);
+
+    if (result.status === 200) {
+      this.setState({ pdfReady: true });
+    }
+    this.setState({ savingAsPdf: false });
   }
-  
+
   async load(id) {
     const result = await fetch(
       `https://vizlaw-api.azurewebsites.net/api/values/${id}`,
@@ -67,12 +72,12 @@ class App extends Component {
       `https://vizlaw-api.azurewebsites.net/api/search?searchQuery=` +
       searchTerm.replace(" ", "+");
     const result = await fetch(url, {
-//      mode: "cors",
-//      headers: {
-//        Authorization: "Token " + "f268accea9dda3efb1837afe34b3a663ecb8af98",
-//        "Access-Control-Allow-Origin": "*",
-//        "Access-Control-Allow-Headers": "application/json"
-//      }
+      //      mode: "cors",
+      //      headers: {
+      //        Authorization: "Token " + "f268accea9dda3efb1837afe34b3a663ecb8af98",
+      //        "Access-Control-Allow-Origin": "*",
+      //        "Access-Control-Allow-Headers": "application/json"
+      //      }
     });
     const json = await result.json();
     console.log("searchResults", json);
@@ -87,8 +92,8 @@ class App extends Component {
       graph.nodes = graph.nodes.map(node => {
         node.id = node.nodeId;
         node.label = node.name;
-        node.shape = 'dot';
-        node.value = node.numberCitations
+        node.shape = "dot";
+        node.value = node.numberCitations;
         // node.widthConstraint = { minimum: node.numberCitations * 1.5 };
         // node.heightConstraint = { minimum: node.numberCitations * 1.5 };
         switch (node.court) {
@@ -226,13 +231,17 @@ class App extends Component {
             ))}
             {this.state.favorites.length > 0 && (
               <div>
-                <a
-                  type="primary"
-                  style={{ color: "#d21534" }}
-                  onClick={this.saveAsPDF.bind(this)}
-                >
-                  <Icon type="export" /> Export as PDF <Icon type="file" />
-                </a>
+                {this.state.pdfReady ? (
+                  <Button href="/results.pdf">PDF herunterladen</Button>
+                ) : (
+                  <Button
+                    loading={this.state.savingAsPdf}
+                    type="primary"
+                    onClick={this.saveAsPDF.bind(this)}
+                  >
+                    <span>Export as PDF vorbereiten...</span>
+                  </Button>
+                )}
               </div>
             )}
             {this.state.selectedId &&
@@ -265,11 +274,8 @@ class App extends Component {
                       this.setState({ selectedDetail: json });
                       // this.loadDetail(selectedNodeId);
                       //this.load(selectedNodeId);
-
-                      },
                     }
-  
-                  }
+                  }}
                 />
               ) : (
                 <span style={{ fontSize: "500%" }}>
@@ -295,10 +301,18 @@ class App extends Component {
                   />{" "}
                   <Icon
                     onClick={() => {
-                      const oldItems = this.state.favorites
-                      const valueToRemove = this.state.selectedDetail
-                      const filteredItems = oldItems.filter(item => item !== valueToRemove)
-                      console.log('oncklick', this.state.favorites, this.state.selectedDetail, valueToRemove, filteredItems)
+                      const oldItems = this.state.favorites;
+                      const valueToRemove = this.state.selectedDetail;
+                      const filteredItems = oldItems.filter(
+                        item => item !== valueToRemove
+                      );
+                      console.log(
+                        "oncklick",
+                        this.state.favorites,
+                        this.state.selectedDetail,
+                        valueToRemove,
+                        filteredItems
+                      );
                       this.setState({
                         favorites: filteredItems
                       });
