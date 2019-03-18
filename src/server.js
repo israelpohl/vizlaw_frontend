@@ -25,11 +25,15 @@ app.post("/pdf", (req, res) => {
         .join("<br/>"),
       options
     )
-    .toFile("results.pdf", function(err, file) {
+    .toFile("src/tmp/results.pdf", function(err, file) {
       console.log("FILE", file);
       if (err) return console.log(err);
-      res.sendFile(file.filename);
+      res.sendStatus(200);
     });
+});
+
+app.get("/results.pdf", function(req, res) {
+  res.sendFile(path.join(__dirname, "tmp", "results.pdf"));
 });
 
 app.get("/", function(req, res) {
