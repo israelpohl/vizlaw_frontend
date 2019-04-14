@@ -253,7 +253,6 @@ class App extends Component {
                     selectNode: async event => {
                       const { nodes, edges } = event;
                       const selectedNodeId = nodes[0];
-                      this.setState({selectedNodeId});
                       console.log("selectedNodeId", selectedNodeId);
 
                       const fetchResult = await fetch(
@@ -320,25 +319,6 @@ class App extends Component {
                     }}
                     style={{ color: "#d21534" }}
                     type="delete"
-                  />{" "}
-                  
-                  // Copy-Paste-Hack from line 174 ff.
-                  <Icon
-                  style={{ color: "#f3464d" }}
-                  type="plus"
-                    
-                    onClick={() => {
-                      this.setState(
-                        {
-                          selectedId: String(this.state.selectedNodeId),
-                          rootNodeId: String(this.state.selectedNodeId)
-                        },
-                        () => {
-                          this.load(String(this.state.selectedNodeId));
-                        }
-                      );
-                    }}
-                  
                   />{" "}
                   {this.state.selectedDetail.name}
                 </h2>
