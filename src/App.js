@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Graph from "react-graph-vis";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag, Button, Alert } from "antd";
+import { Input, Icon, Row, Col, List, Tag, Button, Alert, Tooltip } from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -156,7 +156,27 @@ class App extends Component {
       <div className="App" style={{ padding: "10px" }}>
         <Row>
           <Col span={5}>
-            <a href="https://vizlaw.de/#section_contact">Impressum</a>
+            <a href="https://vizlaw.de/#section_contact">Impressum</a> |{" "}
+            <Tooltip
+              placement="rightBottom"
+              title={
+                <span>
+                  – Node Size = degree of incoming citations (i.e. number of
+                  other cases referring to the specific case)
+                  <br />
+                  <br />
+                  – Node Color = the court's level in the court hierarchy (from
+                  light red for district courts to dark red for federal courts)
+                  <br />
+                  <br />
+                  – Edge Length = time distance of the cases connected by the
+                  edge
+                </span>
+              }
+            >
+              {" "}
+              <b>Hilfe</b>{" "}
+            </Tooltip>
             <div
               style={{
                 position: "absolute",
