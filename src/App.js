@@ -20,6 +20,7 @@ class App extends Component {
   // }
 
   async saveAsPDF() {
+    this.setState({ loading: true });
     this.setState({ savingAsPdf: true });
     console.log("FAVORITES", this.state.favorites);
     const form = new FormData();
@@ -40,9 +41,11 @@ class App extends Component {
       this.setState({ pdfReady: true });
     }
     this.setState({ savingAsPdf: false });
+    this.setState({ loading: false });
   }
 
   async load(id) {
+    this.setState({ loading: true });
     const result = await fetch(
       `https://vizlaw-api.azurewebsites.net/api/values/${id}`,
       {
@@ -65,9 +68,11 @@ class App extends Component {
         edges: [...this.state.graph.edges, ...json.edges]
       }
     });
+    this.setState({ loading: false });
   }
 
   async search(searchTerm) {
+    this.setState({ loading: true });
     const url =
       `https://vizlaw-api.azurewebsites.net/api/search?searchQuery=` +
       searchTerm.replace(" ", "+");
@@ -82,6 +87,7 @@ class App extends Component {
     const json = await result.json();
     console.log("searchResults", json);
     this.setState({ searchResults: json });
+    this.setState({ loading: false });
   }
 
   render() {
@@ -151,12 +157,23 @@ class App extends Component {
     return (
       <div className="App" style={{ padding: "10px" }}>
         <Row>
-          <Col span={6}>
+          <Col span={5}>
+            <div
+              style={{
+                position: "absolute",
+                left: "10px",
+                top: "10px",
+                fontSize: "300%",
+                color: "#fe294c"
+              }}
+            >
+              <Icon type={this.state.loading ? "loading" : null} />
+            </div>
             <img
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
             />
-            <span style={{ fontSize: "300%" }}>{this.state.searchTerm}</span>
+
             <Input.Search
               style={{ width: "100%" }}
               size="large"
@@ -173,6 +190,7 @@ class App extends Component {
                 renderItem={item => (
                   <List.Item
                     onClick={() => {
+                      this.setState({ loading: true });
                       this.setState(
                         {
                           selectedId: String(item.id),
@@ -182,23 +200,20 @@ class App extends Component {
                           this.load(String(item.id));
                         }
                       );
+                      this.setState({ loading: false });
                     }}
                   >
-                    {item.file_number} <br />
-                    {item.court.name} <br />
-                    {item.date}
-
-                    {/* {item.slug.split("-")[0].toUpperCase()}:{" "}
+                    {item.slug.split("-")[0].toUpperCase()}:{" "}
                     {item.slug.split("-")[4].toUpperCase()}{" "}
                     {item.slug.split("-")[5].toUpperCase()}/
                     {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
-                    {item.slug.split("-")[2]}.{item.slug.split("-")[1]}) */}
+                    {item.slug.split("-")[2]}.{item.slug.split("-")[1]})
                   </List.Item>
                 )}
               />
             )}
           </Col>
-          <Col span={10}>
+          <Col span={11}>
             {this.state.favorites.length > 0 && <h2>Gespeicherte Urteile</h2>}
 
             {this.state.favorites.map(favorite => (
@@ -208,6 +223,7 @@ class App extends Component {
                   style={{ fontSize: "200%" }}
                   color="#d21534"
                   onClick={async () => {
+                    this.setState({ loading: true });
                     const fetchResult = await fetch(
                       `https://vizlaw-api.azurewebsites.net/api/search?DecisionId=${
                         favorite.id
@@ -227,6 +243,7 @@ class App extends Component {
 
                     console.log("selectedDetailResult", json);
                     this.setState({ selectedDetail: json });
+                    this.setState({ loading: false });
                   }}
                 >
                   {favorite.slug}
@@ -255,8 +272,10 @@ class App extends Component {
                   style={{ width: "50vw", height: "100vh" }}
                   events={{
                     selectNode: async event => {
+                      this.setState({ loading: true });
                       const { nodes, edges } = event;
                       const selectedNodeId = nodes[0];
+                      this.setState({ selectedNodeId });
                       console.log("selectedNodeId", selectedNodeId);
 
                       const fetchResult = await fetch(
@@ -278,13 +297,12 @@ class App extends Component {
                       this.setState({ selectedDetail: json });
                       // this.loadDetail(selectedNodeId);
                       //this.load(selectedNodeId);
+                      this.setState({ loading: false });
                     }
                   }}
                 />
               ) : (
-                <span style={{ fontSize: "500%" }}>
-                  <Icon type="loading" />
-                </span>
+                <span style={{ fontSize: "500%" }} />
               ))}
           </Col>
           <Col span={8} style={{ maxHeight: "100vh", overflow: "scroll" }}>
@@ -323,6 +341,21 @@ class App extends Component {
                     }}
                     style={{ color: "#d21534" }}
                     type="delete"
+                  />{" "}
+                  <Icon
+                    style={{ color: "#f3464d" }}
+                    type="plus"
+                    onClick={() => {
+                      this.setState(
+                        {
+                          selectedId: String(this.state.selectedNodeId),
+                          rootNodeId: String(this.state.selectedNodeId)
+                        },
+                        () => {
+                          this.load(String(this.state.selectedNodeId));
+                        }
+                      );
+                    }}
                   />{" "}
                   {this.state.selectedDetail.name}
                 </h2>
