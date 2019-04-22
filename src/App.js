@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Graph from "react-graph-vis";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag, Butto, Alert } from "antd";
+import { Input, Icon, Row, Col, List, Tag, Button, Alert } from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -155,8 +155,8 @@ class App extends Component {
     return (
       <div className="App" style={{ padding: "10px" }}>
         <Row>
-            <a href="https://vizlaw.de/#section_contact">Impressum</a>
           <Col span={5}>
+            <a href="https://vizlaw.de/#section_contact">Impressum</a>
             <div
               style={{
                 position: "absolute",
@@ -181,7 +181,6 @@ class App extends Component {
                 message="Achtung: VIZ.LAW funktioniert am besten mit Google Chrome."
               />
             )}
-            <span style={{ fontSize: "300%" }}>{this.state.searchTerm}</span>
             <Input.Search
               style={{ width: "100%" }}
               size="large"
@@ -211,10 +210,10 @@ class App extends Component {
                       this.setState({ loading: false });
                     }}
                   >
-                    {item.file_number} <br />
+                    {/* {item.file_number} <br />
                     {item.court.name} <br />
-                    {item.date}
-                    {/* {item.slug.split("-")[0].toUpperCase()}:{" "}
+                    {item.date} */}
+                    {item.slug.split("-")[0].toUpperCase()}:{" "}
                     {item.slug.split("-")[4].toUpperCase()}{" "}
                     {item.slug.split("-")[5].toUpperCase()}/
                     {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
