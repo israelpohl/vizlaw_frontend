@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Graph from "react-graph-vis";
-import refs from "./refs";
-import sample from "./data";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag, Button } from "antd";
+import { Input, Icon, Row, Col, List, Tag, Butto, Alert } from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -170,10 +168,19 @@ class App extends Component {
               <Icon type={this.state.loading ? "loading" : null} />
             </div>
             <img
+              alt="Logo"
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
             />
-
+            {!window.chrome && (
+              <Alert
+                showIcon={true}
+                banner
+                type="error"
+                message="Achtung: VIZ.LAW funktioniert am besten mit Google Chrome."
+              />
+            )}
+            <span style={{ fontSize: "300%" }}>{this.state.searchTerm}</span>
             <Input.Search
               style={{ width: "100%" }}
               size="large"
@@ -203,7 +210,6 @@ class App extends Component {
                       this.setState({ loading: false });
                     }}
                   >
-                    {item.slug.split("-")[0].toUpperCase()}:{" "}
                     {item.slug.split("-")[4].toUpperCase()}{" "}
                     {item.slug.split("-")[5].toUpperCase()}/
                     {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
@@ -273,7 +279,7 @@ class App extends Component {
                   events={{
                     selectNode: async event => {
                       this.setState({ loading: true });
-                      const { nodes, edges } = event;
+                      const { nodes } = event;
                       const selectedNodeId = nodes[0];
                       this.setState({ selectedNodeId });
                       console.log("selectedNodeId", selectedNodeId);
