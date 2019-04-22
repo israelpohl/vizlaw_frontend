@@ -155,6 +155,7 @@ class App extends Component {
     return (
       <div className="App" style={{ padding: "10px" }}>
         <Row>
+            <a href="https://vizlaw.de/#section_contact">Impressum</a>
           <Col span={5}>
             <div
               style={{
@@ -210,6 +211,10 @@ class App extends Component {
                       this.setState({ loading: false });
                     }}
                   >
+                    {item.file_number} <br />
+                    {item.court.name} <br />
+                    {item.date}
+                    {/* {item.slug.split("-")[0].toUpperCase()}:{" "}
                     {item.slug.split("-")[4].toUpperCase()}{" "}
                     {item.slug.split("-")[5].toUpperCase()}/
                     {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
@@ -377,7 +382,6 @@ class App extends Component {
             )}
           </Col>
         </Row>
-        <a href="https://vizlaw.de/#section_contact">Impressum</a>
       </div>
     );
   }
