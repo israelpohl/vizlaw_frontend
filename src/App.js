@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Graph from "react-graph-vis";
-import refs from "./refs";
-import sample from "./data";
 import moment from "moment";
 import { Input, Icon, Row, Col, List, Tag, Button } from "antd";
 import "antd/dist/antd.css";
@@ -153,6 +151,7 @@ class App extends Component {
         <Row>
           <Col span={6}>
             <img
+              alt="Logo"
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
             />
@@ -187,7 +186,6 @@ class App extends Component {
                     {item.file_number} <br />
                     {item.court.name} <br />
                     {item.date}
-
                     {/* {item.slug.split("-")[0].toUpperCase()}:{" "}
                     {item.slug.split("-")[4].toUpperCase()}{" "}
                     {item.slug.split("-")[5].toUpperCase()}/
@@ -255,7 +253,7 @@ class App extends Component {
                   style={{ width: "50vw", height: "100vh" }}
                   events={{
                     selectNode: async event => {
-                      const { nodes, edges } = event;
+                      const { nodes } = event;
                       const selectedNodeId = nodes[0];
                       console.log("selectedNodeId", selectedNodeId);
 
