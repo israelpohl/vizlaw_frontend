@@ -212,35 +212,38 @@ class App extends Component {
               onSearch={value => this.search(value)}
             />
             {this.state.searchResults && (
-              <List
-                dataSource={this.state.searchResults}
-                renderItem={item => (
-                  <List.Item
-                    onClick={() => {
-                      this.setState({ loading: true });
-                      this.setState(
-                        {
-                          selectedId: String(item.id),
-                          rootNodeId: String(item.id)
-                        },
-                        () => {
-                          this.load(String(item.id));
-                        }
-                      );
-                      this.setState({ loading: false });
-                    }}
-                  >
-                    {/* {item.file_number} <br />
+              <div style={{ maxHeight: "50vh", overflow: "scroll" }}>
+                <List
+                  bordered={true}
+                  dataSource={this.state.searchResults}
+                  renderItem={item => (
+                    <List.Item
+                      onClick={() => {
+                        this.setState({ loading: true });
+                        this.setState(
+                          {
+                            selectedId: String(item.id),
+                            rootNodeId: String(item.id)
+                          },
+                          () => {
+                            this.load(String(item.id));
+                          }
+                        );
+                        this.setState({ loading: false });
+                      }}
+                    >
+                      {/* {item.file_number} <br />
                     {item.court.name} <br />
                     {item.date} */}
-                    {item.slug.split("-")[0].toUpperCase()}:{" "}
-                    {item.slug.split("-")[4].toUpperCase()}{" "}
-                    {item.slug.split("-")[5].toUpperCase()}/
-                    {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
-                    {item.slug.split("-")[2]}.{item.slug.split("-")[1]})
-                  </List.Item>
-                )}
-              />
+                      {item.slug.split("-")[0].toUpperCase()}:{" "}
+                      {item.slug.split("-")[4].toUpperCase()}{" "}
+                      {item.slug.split("-")[5].toUpperCase()}/
+                      {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
+                      {item.slug.split("-")[2]}.{item.slug.split("-")[1]})
+                    </List.Item>
+                  )}
+                />
+              </div>
             )}
           </Col>
           <Col span={11}>
