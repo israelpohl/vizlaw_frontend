@@ -3,7 +3,7 @@ import Graph from "react-graph-vis";
 import refs from "./refs";
 import sample from "./data";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag, Button } from "antd";
+import { Input, Icon, Row, Col, List, Tag, Butto, Alert } from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -156,6 +156,14 @@ class App extends Component {
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
             />
+            {!window.chrome && (
+              <Alert
+                showIcon={true}
+                banner
+                type="error"
+                message="Achtung: VIZ.LAW funktioniert am besten mit Google Chrome."
+              />
+            )}
             <span style={{ fontSize: "300%" }}>{this.state.searchTerm}</span>
             <Input.Search
               style={{ width: "100%" }}
@@ -187,7 +195,6 @@ class App extends Component {
                     {item.file_number} <br />
                     {item.court.name} <br />
                     {item.date}
-
                     {/* {item.slug.split("-")[0].toUpperCase()}:{" "}
                     {item.slug.split("-")[4].toUpperCase()}{" "}
                     {item.slug.split("-")[5].toUpperCase()}/
