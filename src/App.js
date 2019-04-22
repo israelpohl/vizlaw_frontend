@@ -152,6 +152,7 @@ class App extends Component {
       <div className="App" style={{ padding: "10px" }}>
         <Row>
           <Col span={6}>
+            <a href="https://vizlaw.de/#section_contact">Impressum</a>
             <img
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
@@ -187,7 +188,6 @@ class App extends Component {
                     {item.file_number} <br />
                     {item.court.name} <br />
                     {item.date}
-
                     {/* {item.slug.split("-")[0].toUpperCase()}:{" "}
                     {item.slug.split("-")[4].toUpperCase()}{" "}
                     {item.slug.split("-")[5].toUpperCase()}/
@@ -338,7 +338,6 @@ class App extends Component {
             )}
           </Col>
         </Row>
-        <a href="https://vizlaw.de/#section_contact">Impressum</a>
       </div>
     );
   }
