@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Graph from "react-graph-vis";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag, Button } from "antd";
+import { Input, Icon, Row, Col, List, Tag, Butto, Alert } from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -155,6 +155,14 @@ class App extends Component {
               src="https://i.imgur.com/uWmKFYV.png"
               style={{ maxWidth: "100%" }}
             />
+            {!window.chrome && (
+              <Alert
+                showIcon={true}
+                banner
+                type="error"
+                message="Achtung: VIZ.LAW funktioniert am besten mit Google Chrome."
+              />
+            )}
             <span style={{ fontSize: "300%" }}>{this.state.searchTerm}</span>
             <Input.Search
               style={{ width: "100%" }}
