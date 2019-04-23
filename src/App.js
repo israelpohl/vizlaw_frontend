@@ -241,7 +241,6 @@ class App extends Component {
                       {item.slug.split("-")[5].toUpperCase()}/
                       {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
                       {item.slug.split("-")[2]}.{item.slug.split("-")[1]} */}
-                    )
                     </List.Item>
                   )}
                 />
