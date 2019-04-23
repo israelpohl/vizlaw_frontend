@@ -232,14 +232,16 @@ class App extends Component {
                         this.setState({ loading: false });
                       }}
                     >
-                      {/* {item.file_number} <br />
-                    {item.court.name} <br />
-                    {item.date} */}
+                      {item.file_number} <br />
+                      {item.court.name} <br />
+                      {item.date}
+                      {/* 
                       {item.slug.split("-")[0].toUpperCase()}:{" "}
                       {item.slug.split("-")[4].toUpperCase()}{" "}
                       {item.slug.split("-")[5].toUpperCase()}/
                       {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
-                      {item.slug.split("-")[2]}.{item.slug.split("-")[1]})
+                      {item.slug.split("-")[2]}.{item.slug.split("-")[1]} */}
+                    )
                     </List.Item>
                   )}
                 />
