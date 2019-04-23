@@ -156,7 +156,7 @@ class App extends Component {
       <div className="App" style={{ padding: "10px" }}>
         <Row>
           <Col span={5}>
-            <a href="https://vizlaw.de/#section_contact">Impressum</a> |{" "}
+            <a href="https://vizlaw.de/#section_contact">Imprint/Legal</a> |{" "}
             <Tooltip
               placement="rightBottom"
               title={
@@ -175,7 +175,7 @@ class App extends Component {
               }
             >
               {" "}
-              <b>Hilfe</b>{" "}
+              <b>Help</b>{" "}
             </Tooltip>
             <div
               style={{
@@ -198,13 +198,13 @@ class App extends Component {
                 showIcon={true}
                 banner
                 type="error"
-                message="Achtung: VIZ.LAW funktioniert am besten mit Google Chrome."
+                message="Warning: VIZ.LAW works best with Google Chrome."
               />
             )}
             <Input.Search
               style={{ width: "100%" }}
               size="large"
-              placeholder="Suchbegriff eingeben..."
+              placeholder="Enter search term..."
               value={this.state.searchTerm}
               onChange={e => {
                 this.setState({ searchTerm: e.target.value });
@@ -247,7 +247,7 @@ class App extends Component {
             )}
           </Col>
           <Col span={11}>
-            {this.state.favorites.length > 0 && <h2>Gespeicherte Urteile</h2>}
+            {this.state.favorites.length > 0 && <h2>Saved results</h2>}
 
             {this.state.favorites.map(favorite => (
               <span>
@@ -286,14 +286,14 @@ class App extends Component {
             {this.state.favorites.length > 0 && (
               <div>
                 {this.state.pdfReady ? (
-                  <Button href="/results.pdf">PDF herunterladen</Button>
+                  <Button href="/results.pdf">Download PDF</Button>
                 ) : (
                   <Button
                     loading={this.state.savingAsPdf}
                     type="primary"
                     onClick={this.saveAsPDF.bind(this)}
                   >
-                    <span>Export as PDF vorbereiten...</span>
+                    <span>Prepare PDF for export...</span>
                   </Button>
                 )}
               </div>
