@@ -1,7 +1,18 @@
 import React, { Component } from "react";
 import Graph from "react-graph-vis";
 import moment from "moment";
-import { Input, Icon, Row, Col, List, Tag, Button, Alert, Tooltip } from "antd";
+import {
+  Input,
+  Icon,
+  Row,
+  Col,
+  List,
+  Tag,
+  Button,
+  Alert,
+  Tooltip,
+  Modal
+} from "antd";
 import "antd/dist/antd.css";
 
 class App extends Component {
@@ -70,7 +81,7 @@ class App extends Component {
   }
 
   async search(searchTerm) {
-    this.setState({ loading: true });
+    this.setState({ loading: true, alreadySearched: true });
     const url =
       `https://vizlaw-api.azurewebsites.net/api/search?searchQuery=` +
       searchTerm.replace(" ", "+");
@@ -85,7 +96,18 @@ class App extends Component {
     const json = await result.json();
     console.log("searchResults", json);
     this.setState({ searchResults: json });
-    this.setState({ loading: false });
+
+    for (const item of json) {
+      console.log("item", item);
+      this.setState({
+        selectedId: String(item.id),
+        rootNodeId: String(item.id)
+      });
+
+      try {
+        this.load(String(item.id));
+      } catch (e) {}
+    }
   }
 
   render() {
@@ -155,7 +177,80 @@ class App extends Component {
     return (
       <div className="App" style={{ padding: "10px" }}>
         <Row>
-          <Col span={5}>
+          <Col span={16}>
+            <div
+              style={{
+                position: "absolute",
+                left: "30px",
+                top: "75px",
+                fontSize: "500%",
+                color: "#fe294c"
+              }}
+            >
+              <Icon type={this.state.loading ? "loading" : null} />
+            </div>
+            <img
+              alt="Logo"
+              src="https://i.imgur.com/ZzvEXCL.png"
+              style={{ maxWidth: "200px" }}
+            />
+            {!window.chrome && (
+              <Alert
+                showIcon={true}
+                banner
+                type="error"
+                message="Warning: VIZ.LAW works best with Google Chrome."
+              />
+            )}
+            <Modal
+              visible={!this.state.alreadySearched}
+              width="100vw"
+              height="200%"
+              top="0px"
+              style={{ top: "0px" }}
+              closable={false}
+              footer={false}
+            >
+              <div
+                style={{
+                  paddingTop: "300px",
+                  width: "500px",
+                  height: "100vh",
+                  marginLeft: "auto",
+                  marginRight: "auto"
+                }}
+              >
+                <p style={{ textAlign: "center" }}>
+                  <img
+                    alt="Logo"
+                    src="https://i.imgur.com/ZzvEXCL.png"
+                    style={{ maxWidth: "300px" }}
+                  />
+                </p>
+                <Input.Search
+                  style={{ width: "100%" }}
+                  size="large"
+                  placeholder="Enter search term..."
+                  value={this.state.searchTerm}
+                  onChange={e => {
+                    this.setState({ searchTerm: e.target.value });
+                  }}
+                  onSearch={value => this.search(value)}
+                />
+              </div>
+            </Modal>
+            <Input.Search
+              style={{ width: "500px", paddingTop: "10px" }}
+              size="default"
+              enterButton
+              allowClear={true}
+              placeholder="Enter search term..."
+              value={this.state.searchTerm}
+              onChange={e => {
+                this.setState({ searchTerm: e.target.value });
+              }}
+              onSearch={value => this.search(value)}
+            />{" "}
             <a href="https://vizlaw.de/#section_contact">Imprint/Legal</a> |{" "}
             <Tooltip
               placement="rightBottom"
@@ -177,41 +272,7 @@ class App extends Component {
               {" "}
               <b>Help</b>{" "}
             </Tooltip>
-            <div
-              style={{
-                position: "absolute",
-                left: "10px",
-                top: "10px",
-                fontSize: "300%",
-                color: "#fe294c"
-              }}
-            >
-              <Icon type={this.state.loading ? "loading" : null} />
-            </div>
-            <img
-              alt="Logo"
-              src="https://i.imgur.com/uWmKFYV.png"
-              style={{ maxWidth: "100%" }}
-            />
-            {!window.chrome && (
-              <Alert
-                showIcon={true}
-                banner
-                type="error"
-                message="Warning: VIZ.LAW works best with Google Chrome."
-              />
-            )}
-            <Input.Search
-              style={{ width: "100%" }}
-              size="large"
-              placeholder="Enter search term..."
-              value={this.state.searchTerm}
-              onChange={e => {
-                this.setState({ searchTerm: e.target.value });
-              }}
-              onSearch={value => this.search(value)}
-            />
-            {this.state.searchResults && (
+            {/* {this.state.searchResults && (
               <div style={{ maxHeight: "50vh", overflow: "scroll" }}>
                 <List
                   bordered={true}
@@ -235,26 +296,42 @@ class App extends Component {
                       {item.file_number} <br />
                       {item.court.name} <br />
                       {item.date}
-                      {/* 
-                      {item.slug.split("-")[0].toUpperCase()}:{" "}
-                      {item.slug.split("-")[4].toUpperCase()}{" "}
-                      {item.slug.split("-")[5].toUpperCase()}/
-                      {item.slug.split("-")[6]}({item.slug.split("-")[3]}.
-                      {item.slug.split("-")[2]}.{item.slug.split("-")[1]} */}
+                   
                     </List.Item>
                   )}
                 />
               </div>
+            )} */}
+            {this.state.favorites.length > 0 && (
+              <div>
+                <span>
+                  Saved results{" "}
+                  {this.state.favorites.length > 0 && (
+                    <span>
+                      {this.state.pdfReady ? (
+                        <Button size="small" href="/results.pdf">
+                          Download PDF
+                        </Button>
+                      ) : (
+                        <Button
+                          loading={this.state.savingAsPdf}
+                          type="primary"
+                          size="small"
+                          onClick={this.saveAsPDF.bind(this)}
+                        >
+                          <span>Prepare PDF for export...</span>
+                        </Button>
+                      )}
+                    </span>
+                  )}
+                </span>
+              </div>
             )}
-          </Col>
-          <Col span={11}>
-            {this.state.favorites.length > 0 && <h2>Saved results</h2>}
-
             {this.state.favorites.map(favorite => (
-              <span>
+              <span style={{ position: "relative" }}>
                 <Tag
                   size="large"
-                  style={{ fontSize: "200%" }}
+                  style={{ fontSize: "100%" }}
                   color="#d21534"
                   onClick={async () => {
                     this.setState({ loading: true });
@@ -284,26 +361,11 @@ class App extends Component {
                 </Tag>
               </span>
             ))}
-            {this.state.favorites.length > 0 && (
-              <div>
-                {this.state.pdfReady ? (
-                  <Button href="/results.pdf">Download PDF</Button>
-                ) : (
-                  <Button
-                    loading={this.state.savingAsPdf}
-                    type="primary"
-                    onClick={this.saveAsPDF.bind(this)}
-                  >
-                    <span>Prepare PDF for export...</span>
-                  </Button>
-                )}
-              </div>
-            )}
             {this.state.selectedId &&
               (this.state.graph.nodes.length > 0 ? (
                 <Graph
                   graph={formatGraph()}
-                  style={{ width: "50vw", height: "100vh" }}
+                  style={{ width: "100vw", height: "100vh" }}
                   events={{
                     selectNode: async event => {
                       this.setState({ loading: true });
@@ -339,7 +401,16 @@ class App extends Component {
                 <span style={{ fontSize: "500%" }} />
               ))}
           </Col>
-          <Col span={8} style={{ maxHeight: "100vh", overflow: "scroll" }}>
+          <Col
+            span={8}
+            style={{
+              maxHeight: "100vh",
+              overflow: "scroll",
+              backgroundColor: "#FFFFFFDD",
+              paddingLeft: "10px",
+              borderLeft: "5px solid #d21534"
+            }}
+          >
             {this.state.selectedDetail && (
               <div>
                 <h2>
