@@ -23,9 +23,9 @@ app.post("/pdf", (req, res) => {
         margin:25px;
       }
       html, body {
-          width: 210mm;
-          height: 282mm;
-          overflow:visible;
+          // width: 210mm;
+          // height: 282mm;
+          // overflow:visible;
       }
       body {
           padding-top:15mm;
