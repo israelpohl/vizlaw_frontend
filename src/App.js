@@ -407,8 +407,7 @@ class App extends Component {
               maxHeight: "100vh",
               overflow: "scroll",
               backgroundColor: "#FFFFFFDD",
-              paddingLeft: "10px",
-              borderLeft: "5px solid #d21534"
+              paddingLeft: "10px"
             }}
           >
             {this.state.selectedDetail && (
