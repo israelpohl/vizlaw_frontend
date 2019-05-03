@@ -16,8 +16,7 @@ app.post("/pdf", (req, res) => {
   htmlBody = `
   <style>
   .RspDL { margin-top:25px; page-break-inside: avoid; font-size:11pt; }
-  @media print 
-  {
+
       @page {
         size: A4; /* DIN A4 standard, Europe */
         margin:25px;
@@ -30,9 +29,11 @@ app.post("/pdf", (req, res) => {
       body {
           padding-top:15mm;
           transform: scale(0.8);
-
+          font-size:11pt;
       }
-  }
+      h1 {
+        font-size:24pt;
+      }
   </style>
   <body style="font-family: Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;">
     <div style="width:100%; text-align:center;">
