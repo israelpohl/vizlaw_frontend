@@ -4,7 +4,12 @@ const app = express();
 
 var fs = require("fs");
 var pdf = require("html-pdf");
-var options = { format: "A4" };
+var options = { format: "A4",  "border": {
+  "top": "2in",            // default is 0, units: mm, cm, in, px
+  "right": "1in",
+  "bottom": "2in",
+  "left": "1.5in"
+}, };
 
 var bodyParser = require("body-parser");
 
