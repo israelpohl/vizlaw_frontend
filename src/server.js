@@ -4,7 +4,7 @@ const app = express();
 
 var fs = require("fs");
 var pdf = require("html-pdf");
-var options = { format: "Letter" };
+var options = { format: "A4" };
 
 var bodyParser = require("body-parser");
 
