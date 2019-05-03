@@ -31,3 +31,11 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+@media screen and (max-width: 500px) /* Mobile */ {
+  .leftColumn {
+    max-height:500px;
+  }
+}

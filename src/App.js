@@ -177,7 +177,7 @@ class App extends Component {
     return (
       <div className="App" style={{ padding: "10px" }}>
         <Row>
-          <Col  sm={24} md={16}>
+          <Col  sm={24} md={16} className="leftColumn">
             <div
               style={{
                 position: "absolute",
@@ -337,7 +337,7 @@ class App extends Component {
               (this.state.graph.nodes.length > 0 ? (
                 <Graph
                   graph={formatGraph()}
-                  style={{ width: "100vw", height: "100vh" }}
+                  style={{ width: "100%", height: "100vh" }}
                   events={{
                     selectNode: async event => {
                       this.setState({ loading: true });
@@ -358,7 +358,7 @@ class App extends Component {
                             "Access-Control-Allow-Headers": "application/json"
                           }
                         }
-                      );
+                      ); 
                       const json = await fetchResult.json();
 
                       console.log("selectedDetailResult", json);

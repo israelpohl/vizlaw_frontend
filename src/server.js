@@ -26,14 +26,14 @@ app.post("/pdf", (req, res) => {
         size: A4; /* DIN A4 standard, Europe */
         margin:25px;
       }
-      html, body {
+      html {
+        zoom:0.7;
           // width: 210mm;
           // height: 282mm;
           // overflow:visible;
       }
       body {
           padding-top:15mm;
-          transform: scale(0.8);
           font-size:11pt;
       }
       h1 {
@@ -44,7 +44,7 @@ app.post("/pdf", (req, res) => {
     <div style="width:100%; text-align:center;">
       <img style="width:500px;" src="https://i.imgur.com/uWmKFYV.png"/>
     </div>
-    <div style="margin:40px 80px 40px 65px">`+
+    <div >`+
   req.body.favorites
     .map(
       favorite =>

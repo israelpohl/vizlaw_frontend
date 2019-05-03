@@ -21,3 +21,10 @@ code {
   background: #c79294;
   cursor: pointer;
 }
+
+
+@media screen and (max-width: 500px) /* Mobile */ {
+  .leftColumn {
+    max-height:500px;
+  }
+}
