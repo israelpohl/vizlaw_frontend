@@ -29,6 +29,8 @@ app.post("/pdf", (req, res) => {
       }
       body {
           padding-top:15mm;
+          transform: scale(0.8);
+
       }
   }
   </style>
