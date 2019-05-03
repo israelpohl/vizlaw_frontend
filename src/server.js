@@ -55,8 +55,8 @@ app.post("/pdf", (req, res) => {
     )
     .join("<br/>") + '</div></body>';
 
-  var writer = fs.createWriteStream('src/tmp/output.html');
-  writer.write(htmlBody);
+  // var writer = fs.createWriteStream('src/tmp/output.html');
+  // writer.write(htmlBody);
 
   pdf
     .create(htmlBody,

@@ -177,7 +177,7 @@ class App extends Component {
     return (
       <div className="App" style={{ padding: "10px" }}>
         <Row>
-          <Col span={16}>
+          <Col  sm={24} md={16}>
             <div
               style={{
                 position: "absolute",
@@ -214,7 +214,8 @@ class App extends Component {
               <div
                 style={{
                   paddingTop: "300px",
-                  width: "500px",
+                  maxWidth: "500px",
+                  width : "100%",
                   height: "100vh",
                   marginLeft: "auto",
                   marginRight: "auto"
@@ -240,7 +241,7 @@ class App extends Component {
               </div>
             </Modal>
             <Input.Search
-              style={{ width: "500px", paddingTop: "10px" }}
+              style={{ width:"100%", maxWidth: "500px", paddingTop: "10px" }}
               size="default"
               enterButton
               allowClear={true}
@@ -272,36 +273,7 @@ class App extends Component {
               {" "}
               <b>Help</b>{" "}
             </Tooltip>
-            {/* {this.state.searchResults && (
-              <div style={{ maxHeight: "50vh", overflow: "scroll" }}>
-                <List
-                  bordered={true}
-                  dataSource={this.state.searchResults}
-                  renderItem={item => (
-                    <List.Item
-                      onClick={() => {
-                        this.setState({ loading: true });
-                        this.setState(
-                          {
-                            selectedId: String(item.id),
-                            rootNodeId: String(item.id)
-                          },
-                          () => {
-                            this.load(String(item.id));
-                          }
-                        );
-                        this.setState({ loading: false });
-                      }}
-                    >
-                      {item.file_number} <br />
-                      {item.court.name} <br />
-                      {item.date}
-                   
-                    </List.Item>
-                  )}
-                />
-              </div>
-            )} */}
+           
             {this.state.favorites.length > 0 && (
               <div>
                 <span>
@@ -398,11 +370,11 @@ class App extends Component {
                   }}
                 />
               ) : (
-                <span style={{ fontSize: "500%" }} />
+                <span style={{ display:"none" }} />
               ))}
           </Col>
           <Col
-            span={8}
+            sm={24} md={8}
             style={{
               maxHeight: "100vh",
               overflow: "scroll",
